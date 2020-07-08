@@ -1,0 +1,68 @@
+# Based on the file created for Arch Linux by:
+# Maintainer : Thomas Baechler <thomas@archlinux.org>
+
+# Maintainer:  Philip Müller <philm[at]manjaro[dot]org>
+# Contributor: Helmut Stult <helmut[at]manjaro[dot]org>
+
+
+_linuxprefix=linux57-mbp
+_extramodules=extramodules-5.7-MANJARO-mbp
+pkgname=$_linuxprefix-nvidia-390xx
+_pkgname=nvidia
+pkgver=390.132
+pkgrel=10
+pkgdesc="NVIDIA drivers for linux."
+provides=("$_pkgname=$pkgver")
+arch=('i686' 'x86_64')
+url="http://www.nvidia.com/"
+depends=("$_linuxprefix" "nvidia-390xx-utils=${pkgver}")
+makedepends=("$_linuxprefix-headers")
+groups=("$_linuxprefix-extramodules")
+conflicts=('nvidia-96xx' 'nvidia-183xx')
+replaces=("$_linuxprefix-$_pkgname")
+license=('custom')
+install=nvidia.install
+options=(!strip)
+durl="http://us.download.nvidia.com/XFree86/Linux-x86"
+source_i686=("${durl}/${pkgver}/NVIDIA-Linux-x86-${pkgver}.run")
+source_x86_64=("${durl}_64/${pkgver}/NVIDIA-Linux-x86_64-${pkgver}-no-compat32.run")
+source=("kernel-5.5.patch" "kernel-5.6.patch"  "kernel-5.7.patch")
+sha256sums=('c72d89546b6dbd332e678800e48acbcdb29c1e1f23f986f77cee2c46b1a91e75'
+            '9e820398ad71c6ea14a8efc6b0f61a38000971c00a5ac4e5959686569dabb3c7'
+            'e20a466929ab597c45b7168e789c11c1e0a2d7846d9640b3959f5064b17f4430')
+sha256sums_i686=('51adb28f0ed4548f35a88a93ad6767ebd807fa14f418bf5e51a6d63a3ff7f275')
+sha256sums_x86_64=('b6b4b8af37e78e026c9ebdf4a5c64ea412dfcb710931dd028c22dac228de659d')
+
+[[ "$CARCH" = "i686" ]] && _pkg="NVIDIA-Linux-x86-${pkgver}"
+[[ "$CARCH" = "x86_64" ]] && _pkg="NVIDIA-Linux-x86_64-${pkgver}-no-compat32"
+
+prepare() {
+    sh "${_pkg}.run" --extract-only
+    cd "${_pkg}"
+    # patches here
+    # Fix compile problem with 5.7
+    (patch -p1 --no-backup-if-mismatch -i "$srcdir"/kernel-5.5.patch)
+    (patch -p1 --no-backup-if-mismatch -i "$srcdir"/kernel-5.6.patch)
+    (patch -p1 --no-backup-if-mismatch -i "$srcdir"/kernel-5.7.patch)
+}
+
+build() {
+    _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+    cd "${_pkg}"/kernel
+    make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
+}
+
+package() {
+    install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia.ko" \
+        "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia.ko"
+    install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia-modeset.ko" \
+         "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia-modeset.ko"
+    install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia-drm.ko" \
+         "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia-drm.ko"
+    if [[ "$CARCH" = "x86_64" ]]; then
+        install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia-uvm.ko" \
+            "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia-uvm.ko"
+    fi
+    gzip "${pkgdir}/usr/lib/modules/${_extramodules}/"*.ko
+    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/nvidia.install"
+}
