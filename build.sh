@@ -24,3 +24,9 @@ cd ../spl_zfs
 makepkg -s
 mv *.pkg* ../build
 rm -rf src/ pkg/
+
+#apple-bce
+cd ../apple-bce-git
+makepkg -s
+mv *.pkg* ../build
+rm -rf src/ pkg
