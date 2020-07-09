@@ -19,18 +19,6 @@ makepkg -s
 mv *.pkg* ../build
 rm -rf src/ pkg/
 
-#nvidia-390xx
-cd ../nvidia-390xx
-makepkg -s
-mv *.pkg* ../build
-rm -rf src/ pkg/
-
-#nvidia-440xx
-cd ../nvidia-440xx
-makepkg -s
-mv *.pkg* ../build
-rm -rf src/ pkg/
-
 #spl_zfs
 cd ../spl_zfs
 makepkg -s

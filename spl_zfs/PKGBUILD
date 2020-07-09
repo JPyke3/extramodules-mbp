@@ -2,12 +2,12 @@
 # Contributor: Helmut Stult <helmut[at]manjaro[dot]org>
 # Contributor: satmandu
 
-_linuxprefix=linux57-mbp
-_extramodules=extramodules-5.7-MANJARO-mbp
+_linuxprefix=linux56-mbp
+_extramodules=extramodules-5.6-MANJARO-mbp
 pkgbase=$_linuxprefix-spl_zfs
 pkgname=("$_linuxprefix-zfs")
 pkgver=0.8.4
-pkgrel=10
+pkgrel=8
 url="http://zfsonlinux.org/"
 arch=('i686' 'x86_64')
 license=("CDDL")
@@ -37,7 +37,7 @@ build() {
   make
 }
 
-package_linux57-mbp-zfs(){
+package_linux56-zfs(){
   pkgdesc='Kernel modules for the Zettabyte File System.'
   provides=("zfs=$pkgver")
   depends+=("zfs-utils=${pkgver}")

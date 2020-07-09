@@ -6,13 +6,13 @@
 # Maintainer: Bernhard Landauer <oberon@manjaro.org>
 # Contributor: Helmut Stult <helmut[at]manjaro[dot]org>
 
-_linuxprefix=linux57-mbp
-_extramodules=extramodules-5.7-MANJARO-mbp
+_linuxprefix=linux56-mbp
+_extramodules=extramodules-5.6-MANJARO-mbp
 pkgbase=$_linuxprefix-virtualbox-modules
 pkgname=("$_linuxprefix-virtualbox-host-modules" "$_linuxprefix-virtualbox-guest-modules")
 pkgver=6.1.10
 _pkgver="${pkgver}_OSE"
-pkgrel=6
+pkgrel=3
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -37,7 +37,7 @@ build() {
   dkms --dkmsframework dkms.conf build "vboxhost/$_pkgver" -k "$_kernver"
 }
 
-package_linux57-mbp-virtualbox-host-modules(){
+package_linux56-virtualbox-host-modules(){
   pkgdesc='Host kernel modules for VirtualBox'
   replaces=("$_linuxprefix-virtualbox-modules")
   conflicts=("$_linuxprefix-virtualbox-modules")
@@ -58,7 +58,7 @@ package_linux57-mbp-virtualbox-host-modules(){
   echo "vboxnetflt" >> "$pkgdir/etc/modules-load.d/$_linuxprefix-virtualbox-host-modules.conf"
 }
 
-package_linux57-mbp-virtualbox-guest-modules(){
+package_linux56-virtualbox-guest-modules(){
   pkgdesc='Guest kernel modules for VirtualBox'
   replaces=("$_linuxprefix-virtualbox-manjaro-modules")
   conflicts=("$_linuxprefix-virtualbox-manjaro-modules")
@@ -66,6 +66,5 @@ package_linux57-mbp-virtualbox-guest-modules(){
 
   echo "Guest-Modules are now built-in"
 }
-
 
 

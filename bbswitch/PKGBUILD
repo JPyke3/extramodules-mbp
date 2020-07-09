@@ -1,12 +1,12 @@
 # Maintainer: Philip Müller <philm[at]manjaro[dot]org>
 # Contributor: Helmut Stult <helmut[at]manjaro[dot]org>
 
-_linuxprefix=linux57-mbp
-_extramodules=extramodules-5.7-MANJARO-mbp
+_linuxprefix=linux56-mbp
+_extramodules=extramodules-5.6-MANJARO-mbp
 pkgname=$_linuxprefix-bbswitch
 _pkgname=bbswitch
 pkgver=0.8
-pkgrel=10
+pkgrel=23
 pkgdesc="kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('i686' 'x86_64')
 url="http://github.com/Bumblebee-Project/bbswitch"
@@ -16,13 +16,13 @@ makedepends=("$_linuxprefix-headers")
 provides=("$_pkgname=$pkgver")
 groups=("$_linuxprefix-extramodules")
 install=bbswitch.install
-source=("$pkgname-$pkgver.tar.gz::https://github.com/Bumblebee-Project/bbswitch/archive/v${pkgver}.tar.gz" 'kernel57.patch')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/Bumblebee-Project/bbswitch/archive/v${pkgver}.tar.gz" 'kernel56.patch')
 sha256sums=('76cabd3f734fb4fe6ebfe3ec9814138d0d6f47d47238521ecbd6a986b60d1477'
-            '3b8039f3cd32d2aa8ad0b2426f28faac218eacd134c1e39454c9feca9d612789')
+            '8e216e51ffdca321eed5329c10f53cfd258803317165c00b9f1b60f670c9f44d')
 
 prepare() {
   cd ${srcdir}/${_pkgname}-${pkgver}
-  patch -p1 -i ../kernel57.patch
+  patch -p1 -i ../kernel56.patch
 }
 
 build() {
