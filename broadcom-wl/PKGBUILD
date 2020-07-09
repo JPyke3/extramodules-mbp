@@ -5,7 +5,7 @@
 # Contributor: Helmut Stult <helmut[at]manjaro[dot]org>
 
 _linuxprefix=linux56-mbp
-_extramodules=extramodules-5.6-MANJARO-mbpp
+_extramodules=extramodules-5.6-MANJARO-mbp
 pkgname=$_linuxprefix-broadcom-wl
 _pkgname=broadcom-wl
 pkgver=6.30.223.271

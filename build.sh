@@ -22,5 +22,5 @@ rm -rf src/ pkg/
 #spl_zfs
 cd ../spl_zfs
 makepkg -s
-mv *.pv* ../build
+mv *.pkg* ../build
 rm -rf src/ pkg/

@@ -37,7 +37,7 @@ build() {
   make
 }
 
-package_linux56-zfs(){
+package_linux56-mbp-zfs(){
   pkgdesc='Kernel modules for the Zettabyte File System.'
   provides=("zfs=$pkgver")
   depends+=("zfs-utils=${pkgver}")

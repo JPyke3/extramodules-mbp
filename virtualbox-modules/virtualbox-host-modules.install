@@ -1,4 +1,4 @@
-EXTRAMODULES='extramodules-5.6-MANJARO'
+EXTRAMODULES='extramodules-5.6-MANJARO-mbp'
 
 post_install() {
 cat << EOF
