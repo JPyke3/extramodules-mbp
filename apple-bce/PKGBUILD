@@ -1,6 +1,7 @@
 # Maintainer: Aun-Ali Zaidi <admin@kodeit.net>
 
 _kernver="5.6.19-2-mbp"
+_extramodules="extramodules-5.6-MANJARO-mbp"
 _pkgbase=('apple-bce')
 pkgname=(${_pkgbase}-git ${_pkgbase}-dkms-git)
 pkgdesc="Apple BCE (Buffer Copy Engine) driver for T2-based devices."
@@ -16,10 +17,12 @@ makedepends=('git' 'linux-headers')
 options=(!strip)
 
 source=("apple-bce::git+https://github.com/t2linux/apple-bce-drv.git#branch=aur"
-	"dkms.conf.in")
+	"dkms.conf.in"
+	"bce.conf")
 
 sha256sums=('SKIP'
-            '06c389cbfb9e771397c962a782e7217a56be85ac4eee652d927e1e0f63a78ed6')
+            '06c389cbfb9e771397c962a782e7217a56be85ac4eee652d927e1e0f63a78ed6'
+            'fa2fd03d1a6be15f7d74a4e5739906479bf15e5bcc874d6898516f70f4e8df93')
 
 pkgver() {
 	cd "$_pkgbase"
@@ -41,9 +44,9 @@ build() {
 }
 
 package_apple-bce-git() {
-	depends=('linux-mbp' 'linux-mbp-headers')
+	depends=('linux56-mbp' 'linux56-mbp-headers')
 
-	_extramodules="/usr/lib/modules/${_kernver}/extramodules"
+	_extramodules="/usr/lib/modules/${_extramodules}"
 
 	cd "$_pkgbase"
 	install -Dt "${pkgdir}${_extramodules}" -m644 *.ko
@@ -56,6 +59,8 @@ package_apple-bce-dkms-git() {
 	provides=("${_pkgbase}")
 
 	install -Dm644 dkms.conf "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
+
+	install -Dm644 bce.conf "${pkgdir}"/usr/lib/modules-load.d/bce.conf
 
 	cd "$_pkgbase"
 
