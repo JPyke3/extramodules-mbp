@@ -1,0 +1,21 @@
+# Maintainer: Jacob Pyke <pyke.jacob1@gmail.com>
+pkgname=audio-fix-mbp
+pkgver=1
+pkgrel=1
+pkgdesc="Make T2 Mac Audio visible to Pulseaudio"
+url="https://github.com/JPyke3/mbp-manjaro"
+license=('GPL')
+depends=('pulseaudio')
+arch=('x86_64')
+source=("apple-t2.conf"
+	"AppleT2.conf"
+	"91-pulseaudio-custom.rules")
+md5sums=('39a4540740f30b197c971fa619130985'
+         '0d92692c3503f7d578a6f521d0e21bb5'
+         'd840188a05cc167e60f0106541efc297')
+
+package() {
+	install -Dm644 AppleT2.conf "${pkgdir}"/usr/share/alsa/cards/AppleT2.conf
+	install -Dm644 apple-t2.conf "${pkgdir}"/usr/share/pulseaudio/alsa-mixer/profile-sets/apple-t2.conf
+	install -Dm644 91-pulseaudio-custom.rules "${pkgdir}"/usr/lib/udev/rules.d/91-pulseaudio-custom.rules
+}

@@ -1,0 +1,10 @@
+[Unit]
+Description=Service to fix T2 WiFi.
+After=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/modprobe brcmfmac        
+
+[Install]
+WantedBy=multi-user.target

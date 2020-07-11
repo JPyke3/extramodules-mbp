@@ -1,0 +1,15 @@
+# Maintainer: Jacob Pyke <pyke.jacob1@gmail.com>
+pkgname=wifi-fix-mbp
+pkgver=2
+pkgrel=1
+pkgdesc="Fix the WiFi Driver so it loads on boot for T2 MacBooks"
+url="https://github.com/JPyke3/mbp-manjaro"
+license=('GPL')
+depends=()
+arch=('x86_64')
+source=("wifi-fix.service")
+md5sums=('6420cac506d7c0d9f6e2437d400e46bb')
+
+package() {
+	install -Dm644 wifi-fix.service "${pkgdir}"/usr/lib/systemd/system/wifi-fix.service
+}
